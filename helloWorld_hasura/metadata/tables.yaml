@@ -1,6 +1,26 @@
 - table:
     schema: public
     name: module
+  object_relationships:
+  - name: fghjkl
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: user
+        column_mapping:
+          module_name: username
+  - name: user
+    using:
+      foreign_key_constraint_on: module_userId
 - table:
     schema: public
     name: user
+  array_relationships:
+  - name: modules
+    using:
+      foreign_key_constraint_on:
+        column: module_userId
+        table:
+          schema: public
+          name: module
