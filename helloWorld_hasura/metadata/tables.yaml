@@ -1,3 +1,6 @@
 - table:
     schema: public
+    name: module
+- table:
+    schema: public
     name: user
