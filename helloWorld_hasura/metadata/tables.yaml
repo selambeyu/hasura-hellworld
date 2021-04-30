@@ -7,7 +7,7 @@
       manual_configuration:
         remote_table:
           schema: public
-          name: user
+          name: users
         column_mapping:
           module_name: username
   - name: user
@@ -15,7 +15,34 @@
       foreign_key_constraint_on: module_userId
 - table:
     schema: public
-    name: user
+    name: online_users
+  object_relationships:
+  - name: users_online
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: users
+        column_mapping:
+          id: id
+- table:
+    schema: public
+    name: todos
+  object_relationships:
+  - name: user_todos
+    using:
+      foreign_key_constraint_on: user_id
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - is_completed
+      - title
+      filter: {}
+- table:
+    schema: public
+    name: users
   array_relationships:
   - name: modules
     using:
@@ -24,3 +51,10 @@
         table:
           schema: public
           name: module
+  - name: todos
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: todos
